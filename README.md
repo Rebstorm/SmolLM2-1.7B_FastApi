@@ -1,6 +1,6 @@
-# ChatMe
+# SmolLM2-1.7B+FastAPI
 
-ChatMe is a lightweight FastAPI-based wrapper around the `SmolLM2-1.7B-Instruct` model, providing a simple API for text generation with support for streaming and dynamic configuration.
+SmolLM2-1.7B+FastAPI is a lightweight FastAPI-based wrapper around the `SmolLM2-1.7B-Instruct` model, providing a simple API for text generation with support for streaming and dynamic configuration.
 
 ## Quickstart Guide
 
