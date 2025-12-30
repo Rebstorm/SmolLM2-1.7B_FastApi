@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/chatme.iml" filepath="$PROJECT_DIR$/chatme.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SmolLM2-1.7B+FastAPI.iml" filepath="$PROJECT_DIR$/SmolLM2-1.7B+FastAPI.iml" />
     </modules>
   </component>
 </project>

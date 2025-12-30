@@ -14,10 +14,10 @@ The easiest way to get started is using Docker.
 
 ```bash
 # Build the image
-docker build -t chatme-app .
+docker build -t smol-app .
 
 # Run the container
-docker run -p 8000:8000 chatme-app
+docker run -p 8000:8000 smol-app
 ```
 The application will be available at `http://localhost:8000`.
 
