@@ -7,7 +7,7 @@ SmolLM2-1.7B+FastAPI is a lightweight FastAPI-based wrapper around the `SmolLM2-
 ### Prerequisites
 - **Hardware**: At least 8GB of RAM (the model is ~1.7B parameters). A GPU with CUDA support is recommended but not required.
 - **Python**: version 3.13 or higher.
-- **Tools**: `pipenv` for dependency management, or `docker` for containerized deployment.
+- **Tools**: `python` with `pip` (modern standard using `pyproject.toml`), or `docker` for containerized deployment.
 
 ### 1. Run with Docker (Recommended)
 The easiest way to get started is using Docker.
@@ -26,10 +26,24 @@ If you prefer to run it outside of Docker:
 
 ```bash
 # Install dependencies
-pipenv install
+pipx install .
 
 # Start the application
-pipenv run python main.py
+python main.py
+```
+
+### 3. Development Tools
+The project uses `ruff` for linting/formatting and `mypy` for type checking.
+
+```bash
+# Install dev dependencies
+pipx install ".[dev]"
+
+# Run linter
+ruff check .
+
+# Run type checker
+mypy .
 ```
 
 ## API Usage

@@ -9,11 +9,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy dependency files
-COPY Pipfile Pipfile.lock ./
+COPY pyproject.toml ./
 
-# Install pipenv and dependencies directly into the system python
-RUN pip install --no-cache-dir pipenv && \
-    pipenv install --system --deploy
+# Install dependencies directly into the system python
+RUN pip install --no-cache-dir .
 
 # Copy the rest of the application
 COPY . .

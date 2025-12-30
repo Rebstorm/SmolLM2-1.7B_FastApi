@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smol"
+version = "0.1.0"
+description = "SmolLM2-1.7B+FastAPI"
+authors = [
+    {name = "Paul", email = "paul@users.noreply.github.com"}
+]
+dependencies = [
+    "transformers",
+    "torch",
+    "accelerate",
+    "fastapi",
+    "uvicorn",
+]
+readme = "README.md"
+requires-python = ">=3.13"
+
+[tool.setuptools]
+packages = ["app"]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "mypy",
+    "pytest",
+]
+
+[tool.ruff]
+# Target version for the project
+target-version = "py313"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "C", # flake8-comprehensions
+    "B", # flake8-bugbear
+]
+ignore = [
+    "B008", # Do not perform function call `Depends` in argument defaults (FastAPI standard)
+    "E501", # Line too long (managed by ruff format)
+]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+ignore_missing_imports = true
+disable_error_code = ["attr-defined", "arg-type", "no-untyped-call"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
