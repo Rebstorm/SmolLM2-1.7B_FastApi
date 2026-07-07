@@ -124,6 +124,9 @@ venv.bak/
 # mkdocs documentation
 /site
 
+# Chroma vector store (generated index, not source)
+data/chroma/
+
 # mypy
 .mypy_cache/
 .dmypy.json

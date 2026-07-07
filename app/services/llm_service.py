@@ -7,7 +7,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStream
 
 
 class SmolLM:
-    def __init__(self, model_name: str = "HuggingFaceTB/SmolLM2-1.7B-Instruct") -> None:
+    def __init__(self, model_name: str = "Qwen/Qwen2.5-1.5B-Instruct") -> None:
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.set_default_system_prompt: str = "You are a helpful assistant."
         self.max_new_tokens: int = 100
@@ -35,21 +35,30 @@ class SmolLM:
             f"max_new_tokens={self.max_new_tokens}"
         )
 
-    def _format_prompt(self, prompt: str) -> Any:
+    def _format_prompt(self, prompt: str, context: Optional[str] = None) -> Any:
         messages = []
-        if self.set_default_system_prompt:
-            messages.append(
-                {"role": "system", "content": self.set_default_system_prompt}
+        system_content = self.set_default_system_prompt
+        if context:
+            system_content = (
+                f"{system_content}\n\nUse the following context to answer the "
+                f"user's question if relevant:\n{context}"
             )
+        if system_content:
+            messages.append({"role": "system", "content": system_content})
         messages.append({"role": "user", "content": prompt})
         return self.tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )
 
-    def generate(self, prompt: str, max_new_tokens: Optional[int] = None) -> str:
+    def generate(
+        self,
+        prompt: str,
+        max_new_tokens: Optional[int] = None,
+        context: Optional[str] = None,
+    ) -> str:
         if max_new_tokens is None:
             max_new_tokens = self.max_new_tokens
-        formatted_prompt = self._format_prompt(prompt)
+        formatted_prompt = self._format_prompt(prompt, context=context)
         print(f"Generating response for prompt: {prompt}")
         inputs = self.tokenizer(formatted_prompt, return_tensors="pt").to(self.device)
         outputs = self.model.generate(**inputs, max_new_tokens=max_new_tokens)
@@ -60,11 +69,14 @@ class SmolLM:
         )
 
     def stream_generate(
-        self, prompt: str, max_new_tokens: Optional[int] = None
+        self,
+        prompt: str,
+        max_new_tokens: Optional[int] = None,
+        context: Optional[str] = None,
     ) -> Generator[str, None, None]:
         if max_new_tokens is None:
             max_new_tokens = self.max_new_tokens
-        formatted_prompt = self._format_prompt(prompt)
+        formatted_prompt = self._format_prompt(prompt, context=context)
         print(f"Streaming response for prompt: {prompt}")
         inputs = self.tokenizer(formatted_prompt, return_tensors="pt").to(self.device)
         streamer = TextIteratorStreamer(
