@@ -127,6 +127,9 @@ venv.bak/
 # Chroma vector store (generated index, not source)
 data/chroma/
 
+# PDFs for your own RAG
+*.pdf
+
 # mypy
 .mypy_cache/
 .dmypy.json
